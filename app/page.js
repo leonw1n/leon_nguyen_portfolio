@@ -19,60 +19,63 @@ const PortfolioPack = () => {
     const preloadedAudio = new Audio("/sounds/swipe.mp3");
     preloadedAudio.load();
   }, []);
-  
 
   // Card Data
   const cards = [
     {
       id: 1,
+      title: "Tech Lead",
+      company: "iCode Memorial",
+      year: "Summer 2024",
+      image: "/images/icode.jpeg",
+      description:
+        "• Taught kids how to create Minecraft Mods + assisted with debugging computer-related issues",
+      link: "https://icodeschool.com/memorial/"
+    },
+    {
+      id: 2,
       title: "Robotics Instructor",
       company: "STEMkidz",
       year: "Summer 2024",
       image: "/images/stemkidz.jpg",
       description:
-        "Instructed a robotics camp, introducing students to hardware assembly and C++ programming fundamentals",
-    },
-    {
-      id: 2,
-      title: "Analyst Intern",
-      company: "Mobalytics",
-      year: "Summer 2023",
-      image: "/images/stemkidz.jpg",
-      description:
-        "Researched gaming industry trends, selected a genre, and analyzed player psychology and engagement patterns",
+        "• Instructed a robotics camp, introducing students to hardware assembly and C++ programming fundamentals",
+      link: "https://www.linkedin.com/posts/leonhnguyen_were-excited-to-announce-a-successful-end-activity-7237558077992943616-SAna?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEEW1lUBFcReHVGW0mCaKTqIKJHHfVeh-bo"
     },
     {
       id: 3,
-      title: "Hackathon Winner",
-      company: "Global Tech Fest",
-      year: "2019",
-      image: "/images/stemkidz.jpg",
-      description: "First place in international coding competition",
+      title: "Analyst Intern",
+      company: "Mobalytics",
+      year: "Summer 2023",
+      image: "/images/mobalytics.gg.png",
+      description:
+        "• Researched gaming industry trends, selected a genre, and analyzed player psychology and engagement patterns",
+      link: "https://mobalytics.gg/"
     },
     {
       id: 4,
-      title: "Project",
-      company: "Global Tech Fest",
-      year: "2019",
-      image: "/images/stemkidz.jpg",
-      description: "First place in international coding competition",
+      title: "Therable",
+      company: "3rd Place Winner @ HackTX 2024",
+      year: "Fall 2024",
+      image: "/images/therable.jpeg",
+      description: "3rd place in international coding competition",
+      link: "https://devpost.com/software/therable",
     },
     {
       id: 5,
-      title: "Project",
+      title: "IRL Pokedex",
       company: "Various Projects",
       year: "2017-Present",
       image: "/images/stemkidz.jpg",
       description: "Active contributor to multiple open source projects",
+      link: "https://www.linkedin.com/posts/leonhnguyen_were-excited-to-announce-a-successful-end-activity-7237558077992943616-SAna?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEEW1lUBFcReHVGW0mCaKTqIKJHHfVeh-bo",
     },
   ];
 
   // Handle Pack Opening Animation
   const handlePackOpen = () => {
-
     playSwipeSound(); // Play sound when swiping
     setIsPackOpened(true);
-
   };
 
   const playCardSwipeSound = () => {
@@ -93,8 +96,7 @@ const PortfolioPack = () => {
   };
 
   return (
-  <div className="min-h-screen bg-[#ceddf3] p-8 flex flex-col items-center">
-
+    <div className="min-h-screen bg-[#ceddf3] p-8 flex flex-col items-center">
       <AnimatePresence>
         {!isPackOpened ? (
           // PACK CUT OPENING ANIMATION
@@ -134,38 +136,48 @@ const PortfolioPack = () => {
         ) : !allCardsRevealed ? (
           // SWIPE ONE CARD AT A TIME
           <motion.div
-          key={cards[currentCardIndex].id}
-          className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center cursor-pointer"
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          onDragEnd={handleCardSwipe}
-          initial={{ x: 300, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -300, opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <img 
-            src={cards[currentCardIndex].image} 
-            alt={cards[currentCardIndex].title} 
-            className="w-full h-40 object-cover rounded-lg mb-4"
-          />
-          <h3 className="text-xl font-bold text-center mb-2">
-            {cards[currentCardIndex].title}
-          </h3>
-          <div className="text-gray-600 text-center mb-2">
-            {cards[currentCardIndex].company}
-          </div>
-          <div className="text-sm text-gray-500 text-center mb-4">
-            {cards[currentCardIndex].year}
-          </div>
-          <p className="text-gray-700 text-center">
-            {cards[currentCardIndex].description}
-          </p>
-          <motion.div className="absolute bottom-4 text-sm text-gray-400">
-            Swipe to Reveal Next
+            key={cards[currentCardIndex].id}
+            className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center cursor-pointer"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={handleCardSwipe}
+            initial={{ x: 300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -300, opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <img
+              src={cards[currentCardIndex].image}
+              alt={cards[currentCardIndex].title}
+              className="w-full h-40 object-cover rounded-lg mb-4"
+            />
+            <h3 className="text-xl font-bold text-center mb-2">
+              {cards[currentCardIndex].title}
+            </h3>
+            <div className="text-gray-600 text-center mb-2">
+              {cards[currentCardIndex].company}
+            </div>
+            <div className="text-sm text-gray-500 text-center mb-4">
+              {cards[currentCardIndex].year}
+            </div>
+            <p className="text-gray-700 text-center">
+              {cards[currentCardIndex].description}
+            </p>
+            <motion.div className="absolute bottom-6 flex flex-col items-center">
+              {/* Clickable Link Above */}
+              <a
+                href={cards[currentCardIndex].link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline hover:text-blue-800 mb-1"
+              >
+                Link
+              </a>
+
+              {/* Swipe Text Below */}
+              <div className="text-sm text-gray-400">Swipe to Reveal Next</div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-        
         ) : (
           // SHOW ALL CARDS AFTER SWIPE
           <motion.div
@@ -178,65 +190,81 @@ const PortfolioPack = () => {
             {/* Top Row (3 Cards - Now Closer) */}
             {cards.slice(0, 3).map((card) => (
               <motion.div
-              key={card.id}
-              className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: card.id * 0.1 }}
-            >
-              <img 
-                src={card.image} 
-                alt={card.title} 
-                className="w-full h-40 object-cover rounded-t-lg mb-4"
-              />
-              <h3 className="text-xl font-bold text-center mb-1">
-                {card.title}
-              </h3>
-              <div className="text-gray-600 text-center mb-2">
-                {card.company}
+                key={card.id}
+                className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: card.id * 0.1 }}
+              >
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="w-full h-40 object-cover rounded-t-lg mb-4"
+                />
+                <h3 className="text-xl font-bold text-center mb-1">
+                  {card.title}
+                </h3>
+                <div className="text-gray-600 text-center mb-2">
+                  {card.company}
+                </div>
+                <div className="text-sm text-gray-500 text-center mb-4">
+                  {card.year}
+                </div>
+                <p className="text-gray-700 text-center">{card.description}</p>
+                <div className="absolute bottom-6 flex flex-col items-center">
+              <a
+                href={card.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline hover:text-blue-800 mb-1"
+              >
+                Link
+              </a>
               </div>
-              <div className="text-sm text-gray-500 text-center mb-4">
-                {card.year}
-              </div>
-              <p className="text-gray-700 text-center">
-                {card.description}
-              </p>
-            </motion.div>
-            
+              </motion.div>
             ))}
 
             {/* Bottom Row (2 Cards - Closer to Top Row) */}
-{/* Bottom Row (2 Cards - Closer to Top Row) */}
-<div className="col-span-3 flex justify-center gap-16 mt-2">
-  {cards.slice(3, 5).map((card) => (
-    <motion.div
-      key={card.id}
-      className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: card.id * 0.1 }}
-    >
-      <img 
-        src={card.image} 
-        alt={card.title} 
-        className="w-full h-40 object-cover rounded-t-lg mb-4"
-      />
-      <h3 className="text-xl font-bold text-center mb-1">
-        {card.title}
-      </h3>
-      <div className="text-gray-600 text-center mb-2">
-        {card.company}
-      </div>
-      <div className="text-sm text-gray-500 text-center mb-4">
-        {card.year}
-      </div>
-      <p className="text-gray-700 text-center">
-        {card.description}
-      </p>
-    </motion.div>
-  ))}
-</div>
-
+            <div className="col-span-3 flex justify-center gap-16 mt-2">
+              {cards.slice(3, 5).map((card) => (
+                <motion.div
+                  key={card.id}
+                  className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: card.id * 0.1 }}
+                >
+                  <img
+                    src={card.image}
+                    alt={card.title}
+                    className="w-full h-40 object-cover rounded-t-lg mb-4"
+                  />
+                  <h3 className="text-xl font-bold text-center mb-1">
+                    {card.title}
+                  </h3>
+                  <div className="text-gray-600 text-center mb-2">
+                    {card.company}
+                  </div>
+                  <div className="text-sm text-gray-500 text-center mb-4">
+                    {card.year}
+                  </div>
+                  <p className="text-gray-700 text-center">
+                    {card.description}
+                  </p>
+                  <div className="absolute bottom-6 flex flex-col items-center">
+              {/* Clickable Link Above */}
+              <a
+                href={card.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline hover:text-blue-800 mb-1"
+              >
+                Link
+              </a>
+             </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
