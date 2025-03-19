@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Function to play the sound
@@ -15,6 +15,10 @@ const PortfolioPack = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [allCardsRevealed, setAllCardsRevealed] = useState(false);
 
+  useEffect(() => {
+    const preloadedAudio = new Audio("/sounds/swipe.mp3");
+    preloadedAudio.load();
+  }, []);
   
 
   // Card Data
@@ -71,10 +75,16 @@ const PortfolioPack = () => {
 
   };
 
+  const playCardSwipeSound = () => {
+    const audio = new Audio("/sounds/swipe.mp3");
+    audio.play();
+  };
+
   // Handle Swiping Between Cards
   const handleCardSwipe = (_, info) => {
     if (Math.abs(info.offset.x) > 100) {
       if (currentCardIndex < cards.length - 1) {
+        playCardSwipeSound(); // Play sound on swipe
         setCurrentCardIndex(currentCardIndex + 1);
       } else {
         setAllCardsRevealed(true);
@@ -83,7 +93,8 @@ const PortfolioPack = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8 flex flex-col items-center">
+  <div className="min-h-screen bg-[#ceddf3] p-8 flex flex-col items-center">
+
       <AnimatePresence>
         {!isPackOpened ? (
           // PACK CUT OPENING ANIMATION
@@ -112,8 +123,8 @@ const PortfolioPack = () => {
 
               {/* Swipe Line */}
               <div className="absolute top-12 left-0 w-full px-4">
-                <div className="relative h-1 bg-white/20 rounded">
-                  <motion.div className="absolute top-0 left-0 h-full bg-white/60 rounded" />
+                <div className="relative h-1 bg-[#f4eff1]/20 rounded">
+                  <motion.div className="absolute top-0 left-0 h-full bg-[#f4eff1]/60 rounded" />
                 </div>
               </div>
 
@@ -124,7 +135,7 @@ const PortfolioPack = () => {
           // SWIPE ONE CARD AT A TIME
           <motion.div
           key={cards[currentCardIndex].id}
-          className="relative w-80 h-[30rem] bg-white rounded-lg shadow-xl p-4 flex flex-col justify-start items-center cursor-pointer"
+          className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center cursor-pointer"
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           onDragEnd={handleCardSwipe}
@@ -167,56 +178,65 @@ const PortfolioPack = () => {
             {/* Top Row (3 Cards - Now Closer) */}
             {cards.slice(0, 3).map((card) => (
               <motion.div
-                key={card.id}
-                className="w-64 h-96 bg-white rounded-lg shadow-xl p-6 flex flex-col"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: card.id * 0.1 }}
-              >
-                <div className="flex items-center justify-center mb-4">
-                  {card.icon}
-                </div>
-                <h3 className="text-xl font-bold text-center mb-2">
-                  {card.title}
-                </h3>
-                <div className="text-gray-600 text-center mb-2">
-                  {card.company}
-                </div>
-                <div className="text-sm text-gray-500 text-center mb-4">
-                  {card.year}
-                </div>
-                <p className="text-gray-700 text-center">{card.description}</p>
-              </motion.div>
+              key={card.id}
+              className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: card.id * 0.1 }}
+            >
+              <img 
+                src={card.image} 
+                alt={card.title} 
+                className="w-full h-40 object-cover rounded-t-lg mb-4"
+              />
+              <h3 className="text-xl font-bold text-center mb-1">
+                {card.title}
+              </h3>
+              <div className="text-gray-600 text-center mb-2">
+                {card.company}
+              </div>
+              <div className="text-sm text-gray-500 text-center mb-4">
+                {card.year}
+              </div>
+              <p className="text-gray-700 text-center">
+                {card.description}
+              </p>
+            </motion.div>
+            
             ))}
 
             {/* Bottom Row (2 Cards - Closer to Top Row) */}
-            <div className="col-span-3 flex justify-center gap-16 mt-2">
-              {cards.slice(3, 5).map((card) => (
-                <motion.div
-                  key={card.id}
-                  className="w-64 h-96 bg-white rounded-lg shadow-xl p-6 flex flex-col"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: card.id * 0.1 }}
-                >
-                  <div className="flex items-center justify-center mb-4">
-                    {card.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-center mb-2">
-                    {card.title}
-                  </h3>
-                  <div className="text-gray-600 text-center mb-2">
-                    {card.company}
-                  </div>
-                  <div className="text-sm text-gray-500 text-center mb-4">
-                    {card.year}
-                  </div>
-                  <p className="text-gray-700 text-center">
-                    {card.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+{/* Bottom Row (2 Cards - Closer to Top Row) */}
+<div className="col-span-3 flex justify-center gap-16 mt-2">
+  {cards.slice(3, 5).map((card) => (
+    <motion.div
+      key={card.id}
+      className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: card.id * 0.1 }}
+    >
+      <img 
+        src={card.image} 
+        alt={card.title} 
+        className="w-full h-40 object-cover rounded-t-lg mb-4"
+      />
+      <h3 className="text-xl font-bold text-center mb-1">
+        {card.title}
+      </h3>
+      <div className="text-gray-600 text-center mb-2">
+        {card.company}
+      </div>
+      <div className="text-sm text-gray-500 text-center mb-4">
+        {card.year}
+      </div>
+      <p className="text-gray-700 text-center">
+        {card.description}
+      </p>
+    </motion.div>
+  ))}
+</div>
+
           </motion.div>
         )}
       </AnimatePresence>
