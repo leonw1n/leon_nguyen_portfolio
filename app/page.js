@@ -201,93 +201,45 @@ const PortfolioPack = () => {
             </motion.div>
           </motion.div>
         ) : (
-          // SHOW ALL CARDS AFTER SWIPE
-          <motion.div
-            key="all-cards"
-            className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center items-center relative"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Top Row (3 Cards - Now Closer) */}
-            {cards.slice(0, 3).map((card) => (
-              <motion.div
-                key={card.id}
-                className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: card.id * 0.1 }}
-              >
-                <img
-                  src={card.image}
-                  alt={card.title}
-                  className="w-full h-40 object-cover rounded-t-lg mb-4"
-                />
-                <h3 className="text-xl font-bold text-center mb-1">
-                  {card.title}
-                </h3>
-                <div className="text-gray-600 text-center mb-2">
-                  {card.company}
-                </div>
-                <div className="text-sm text-gray-500 text-center mb-4">
-                  {card.year}
-                </div>
-                <p className="text-gray-700 text-center">{card.description}</p>
-                <div className="absolute bottom-6 flex flex-col items-center">
-                  <a
-                    href={card.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 underline hover:text-blue-800 mb-1"
-                  >
-                    Link
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-
-            {/* Bottom Row (2 Cards - Closer to Top Row) */}
-            <div className="col-span-3 flex justify-center gap-16 mt-2">
-              {cards.slice(3, 5).map((card) => (
-                <motion.div
-                  key={card.id}
-                  className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: card.id * 0.1 }}
-                >
-                  <img
-                    src={card.image}
-                    alt={card.title}
-                    className="w-full h-40 object-cover rounded-t-lg mb-4"
-                  />
-                  <h3 className="text-xl font-bold text-center mb-1">
-                    {card.title}
-                  </h3>
-                  <div className="text-gray-600 text-center mb-2">
-                    {card.company}
-                  </div>
-                  <div className="text-sm text-gray-500 text-center mb-4">
-                    {card.year}
-                  </div>
-                  <p className="text-gray-700 text-center">
-                    {card.description}
-                  </p>
-                  <div className="absolute bottom-6 flex flex-col items-center">
-                    {/* Clickable Link Above */}
-                    <a
-                      href={card.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline hover:text-blue-800 mb-1"
-                    >
-                      Link
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+// SHOW ALL CARDS AFTER SWIPE
+<motion.div
+  key="all-cards"
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-4 justify-center"
+  initial={{ opacity: 0, scale: 0.8 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.6 }}
+>
+  {/* Map through ALL CARDS instead of separating into "top" and "bottom" rows */}
+  {cards.map((card) => (
+    <motion.div
+      key={card.id}
+      className="relative w-full max-w-[22rem] h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: card.id * 0.1 }}
+    >
+      <img
+        src={card.image}
+        alt={card.title}
+        className="w-full h-40 object-cover rounded-t-lg mb-4"
+      />
+      <h3 className="text-xl font-bold text-center mb-1">{card.title}</h3>
+      <div className="text-gray-600 text-center mb-2">{card.company}</div>
+      <div className="text-sm text-gray-500 text-center mb-4">{card.year}</div>
+      <p className="text-gray-700 text-center">{card.description}</p>
+      <div className="absolute bottom-6 flex flex-col items-center">
+        <a
+          href={card.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 underline hover:text-blue-800 mb-1"
+        >
+          Link
+        </a>
+      </div>
+    </motion.div>
+  ))}
+</motion.div>
         )}
       </AnimatePresence>
     </div>
