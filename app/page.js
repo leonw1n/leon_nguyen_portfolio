@@ -5,13 +5,21 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const playSound = (file) => {
   const audio = new Audio(file);
-  audio.play().catch((error) => {
-    console.log("Audio playback blocked. User interaction required.");
+
+  // Try to play the sound & catch errors (needed for iOS)
+  audio.play().catch(error => {
+    console.log("iOS blocked audio autoplay. User must interact first.");
   });
+
+  // Ensure the sound is preloaded on iOS
+  document.body.addEventListener("touchstart", () => {
+    audio.play();
+  }, { once: true });  // Runs only once to avoid multiple event listeners
 };
 
 const playSwipeSound = () => playSound("/sounds/packrip.mp3");
 const playCardSwipeSound = () => playSound("/sounds/swipe.mp3");
+
 
 const PortfolioPack = () => {
   // State Management
@@ -20,16 +28,16 @@ const PortfolioPack = () => {
   const [allCardsRevealed, setAllCardsRevealed] = useState(false);
 
   useEffect(() => {
-    const preloadSounds = () => {
-      const sounds = ["/sounds/packrip.mp3", "/sounds/swipe.mp3"];
-      sounds.forEach((src) => {
-        const audio = new Audio(src);
-        audio.load(); // Preload audio to prevent lag
-      });
+    const preloadAudio = (src) => {
+      const audio = new Audio(src);
+      audio.load();  // Preloads the sound file
     };
-
-    preloadSounds();
+  
+    // Preload both sound files
+    preloadAudio("/sounds/packrip.mp3");
+    preloadAudio("/sounds/swipe.mp3");
   }, []);
+  
 
   // Card Data
   const cards = [
