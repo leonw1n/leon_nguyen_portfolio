@@ -30,7 +30,7 @@ const PortfolioPack = () => {
       image: "/images/icode.jpeg",
       description:
         "• Teach fundamental programming concepts such as conditionals and block coding through hands-on learning in an interactive project setting",
-      link: "https://icodeschool.com/memorial/"
+      link: "https://icodeschool.com/memorial/",
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ const PortfolioPack = () => {
       image: "/images/stemkidz.jpg",
       description:
         "• Instructed a robotics camp, introducing students to hardware assembly and C++ programming fundamentals.",
-      link: "https://www.linkedin.com/posts/leonhnguyen_were-excited-to-announce-a-successful-end-activity-7237558077992943616-SAna?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEEW1lUBFcReHVGW0mCaKTqIKJHHfVeh-bo"
+      link: "https://www.linkedin.com/posts/leonhnguyen_were-excited-to-announce-a-successful-end-activity-7237558077992943616-SAna?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEEW1lUBFcReHVGW0mCaKTqIKJHHfVeh-bo",
     },
     {
       id: 3,
@@ -50,7 +50,7 @@ const PortfolioPack = () => {
       image: "/images/mobalytics.gg.png",
       description:
         "• Researched gaming industry trends, selected a genre, and analyzed player psychology and engagement patterns.",
-      link: "https://mobalytics.gg/"
+      link: "https://mobalytics.gg/",
     },
     {
       id: 4,
@@ -58,7 +58,8 @@ const PortfolioPack = () => {
       company: "3rd Place Winner @ HackTX 2024",
       year: "Fall 2024",
       image: "/images/therable.jpeg",
-      description: "• Developed the landing page and dashboard using Next.js, JavaScript, React, and TailwindCSS, integrated Clerk for secure user access.",
+      description:
+        "• Developed the landing page and dashboard using Next.js, JavaScript, React, and TailwindCSS, integrated Clerk for secure user access.",
       link: "https://devpost.com/software/therable",
     },
     {
@@ -67,7 +68,8 @@ const PortfolioPack = () => {
       company: "Next.js/Vercel Blob/GET/POST/GPT",
       year: "Winter 2024",
       image: "/images/pokedex.png",
-      description: "• Developed a Pokémon-themed web application with Next.js and React, utilizing Vercel Blob to handle images and GPT to generate Pokémon-like descriptions of user-uploaded images.",
+      description:
+        "• Developed a Pokémon-themed web application with Next.js and React, utilizing Vercel Blob to handle images and GPT to generate Pokémon-like descriptions of user-uploaded images.",
       link: "https://youtu.be/zHO1zwewZow",
     },
   ];
@@ -103,35 +105,48 @@ const PortfolioPack = () => {
           <motion.div key="pack" className="relative w-64 h-96">
             {/* Background */}
             <div className="absolute inset-0 bg-gray-100 rounded-lg" />
-
             {/* Bottom part of the pack */}
-            <div className="absolute inset-x-0 top-20 bottom-0 bg-gradient-to-br from-purple-600 to-purple-800 rounded-b-lg shadow-xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20" />
+            <div className="absolute inset-x-0 top-20 bottom-0 bg-gradient-to-br from-purple-600 to-purple-800 rounded-b-lg shadow-xl overflow-hidden flex flex-col items-center justify-end p-4">
+              {/* Image inside the pack at the bottom */}
+              <img
+                src="/images/resume_image.jpg"
+                alt="Resume Pack"
+                className="w-32 h-32 object-cover rounded-lg shadow-md mb-2"
+              />
+
+              {/* Name's Resume Text Below the Image */}
+              <div className="text-white text-center font-bold text-lg">
+                Leon Nguyen's Portfolio
+              </div>
             </div>
 
             {/* Top part of the pack (Swipe Cut Effect) */}
-            <motion.div
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              onDragEnd={(_, info) => {
-                if (Math.abs(info.offset.x) > 100) {
-                  handlePackOpen();
-                }
-              }}
-              className="absolute inset-x-0 top-0 h-20 bg-gradient-to-br from-purple-600 to-purple-800 rounded-t-lg cursor-grab overflow-hidden"
-            >
-              {/* Holographic Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20" />
+<motion.div
+  drag="x"
+  dragConstraints={{ left: 0, right: 0 }}
+  onDragEnd={(_, info) => {
+    if (Math.abs(info.offset.x) > 100) {
+      handlePackOpen();
+    }
+  }}
+  className="absolute inset-x-0 top-0 h-20 bg-gradient-to-br from-purple-600 to-purple-800 rounded-t-lg cursor-grab overflow-hidden flex items-center justify-center"
+>
+  {/* Holographic Effect */}
+  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20" />
 
-              {/* Swipe Line */}
-              <div className="absolute top-12 left-0 w-full px-4">
-                <div className="relative h-1 bg-[#f4eff1]/20 rounded">
-                  <motion.div className="absolute top-0 left-0 h-full bg-[#f4eff1]/60 rounded" />
-                </div>
-              </div>
+  {/* Swipe to Open Text */}
+  <div className="text-white font-bold text-lg">Swipe Me to Open</div>
 
-              <div className="absolute bottom-0 left-0 w-full h-2 bg-purple-900" />
-            </motion.div>
+  {/* Swipe Line */}
+  <div className="absolute top-12 left-0 w-full px-4">
+    <div className="relative h-1 bg-[#f4eff1]/20 rounded">
+      <motion.div className="absolute top-0 left-0 h-full bg-[#f4eff1]/60 rounded" />
+    </div>
+  </div>
+
+  <div className="absolute bottom-0 left-0 w-full h-2 bg-purple-900" />
+</motion.div>
+
           </motion.div>
         ) : !allCardsRevealed ? (
           // SWIPE ONE CARD AT A TIME
@@ -212,15 +227,15 @@ const PortfolioPack = () => {
                 </div>
                 <p className="text-gray-700 text-center">{card.description}</p>
                 <div className="absolute bottom-6 flex flex-col items-center">
-              <a
-                href={card.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline hover:text-blue-800 mb-1"
-              >
-                Link
-              </a>
-              </div>
+                  <a
+                    href={card.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline hover:text-blue-800 mb-1"
+                  >
+                    Link
+                  </a>
+                </div>
               </motion.div>
             ))}
 
@@ -252,16 +267,16 @@ const PortfolioPack = () => {
                     {card.description}
                   </p>
                   <div className="absolute bottom-6 flex flex-col items-center">
-              {/* Clickable Link Above */}
-              <a
-                href={card.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline hover:text-blue-800 mb-1"
-              >
-                Link
-              </a>
-             </div>
+                    {/* Clickable Link Above */}
+                    <a
+                      href={card.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline hover:text-blue-800 mb-1"
+                    >
+                      Link
+                    </a>
+                  </div>
                 </motion.div>
               ))}
             </div>
