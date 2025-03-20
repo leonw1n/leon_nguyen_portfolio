@@ -3,11 +3,15 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Function to play the sound
-const playSwipeSound = () => {
-  const audio = new Audio("/sounds/packrip.mp3");
-  audio.play();
+const playSound = (file) => {
+  const audio = new Audio(file);
+  audio.play().catch((error) => {
+    console.log("Audio playback blocked. User interaction required.");
+  });
 };
+
+const playSwipeSound = () => playSound("/sounds/packrip.mp3");
+const playCardSwipeSound = () => playSound("/sounds/swipe.mp3");
 
 const PortfolioPack = () => {
   // State Management
@@ -16,8 +20,15 @@ const PortfolioPack = () => {
   const [allCardsRevealed, setAllCardsRevealed] = useState(false);
 
   useEffect(() => {
-    const preloadedAudio = new Audio("/sounds/swipe.mp3");
-    preloadedAudio.load();
+    const preloadSounds = () => {
+      const sounds = ["/sounds/packrip.mp3", "/sounds/swipe.mp3"];
+      sounds.forEach((src) => {
+        const audio = new Audio(src);
+        audio.load(); // Preload audio to prevent lag
+      });
+    };
+
+    preloadSounds();
   }, []);
 
   // Card Data
@@ -80,11 +91,6 @@ const PortfolioPack = () => {
     setIsPackOpened(true);
   };
 
-  const playCardSwipeSound = () => {
-    const audio = new Audio("/sounds/swipe.mp3");
-    audio.play();
-  };
-
   // Handle Swiping Between Cards
   const handleCardSwipe = (_, info) => {
     if (Math.abs(info.offset.x) > 100) {
@@ -121,32 +127,33 @@ const PortfolioPack = () => {
             </div>
 
             {/* Top part of the pack (Swipe Cut Effect) */}
-<motion.div
-  drag="x"
-  dragConstraints={{ left: 0, right: 0 }}
-  onDragEnd={(_, info) => {
-    if (Math.abs(info.offset.x) > 100) {
-      handlePackOpen();
-    }
-  }}
-  className="absolute inset-x-0 top-0 h-20 bg-gradient-to-br from-purple-600 to-purple-800 rounded-t-lg cursor-grab overflow-hidden flex items-center justify-center"
->
-  {/* Holographic Effect */}
-  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20" />
+            <motion.div
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={(_, info) => {
+                if (Math.abs(info.offset.x) > 100) {
+                  handlePackOpen();
+                }
+              }}
+              className="absolute inset-x-0 top-0 h-20 bg-gradient-to-br from-purple-600 to-purple-800 rounded-t-lg cursor-grab overflow-hidden flex items-center justify-center"
+            >
+              {/* Holographic Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20" />
 
-  {/* Swipe to Open Text */}
-  <div className="text-white font-bold text-lg">Swipe Me to Open</div>
+              {/* Swipe to Open Text */}
+              <div className="text-white font-bold text-lg">
+                Swipe Me to Open
+              </div>
 
-  {/* Swipe Line */}
-  <div className="absolute top-12 left-0 w-full px-4">
-    <div className="relative h-1 bg-[#f4eff1]/20 rounded">
-      <motion.div className="absolute top-0 left-0 h-full bg-[#f4eff1]/60 rounded" />
-    </div>
-  </div>
+              {/* Swipe Line */}
+              <div className="absolute top-12 left-0 w-full px-4">
+                <div className="relative h-1 bg-[#f4eff1]/20 rounded">
+                  <motion.div className="absolute top-0 left-0 h-full bg-[#f4eff1]/60 rounded" />
+                </div>
+              </div>
 
-  <div className="absolute bottom-0 left-0 w-full h-2 bg-purple-900" />
-</motion.div>
-
+              <div className="absolute bottom-0 left-0 w-full h-2 bg-purple-900" />
+            </motion.div>
           </motion.div>
         ) : !allCardsRevealed ? (
           // SWIPE ONE CARD AT A TIME
@@ -197,7 +204,7 @@ const PortfolioPack = () => {
           // SHOW ALL CARDS AFTER SWIPE
           <motion.div
             key="all-cards"
-            className="grid grid-cols-3 gap-x-12 gap-y-12 justify-center items-center relative"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center items-center relative"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
