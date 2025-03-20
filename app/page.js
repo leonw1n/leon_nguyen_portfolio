@@ -26,10 +26,10 @@ const PortfolioPack = () => {
       id: 1,
       title: "Tech Lead",
       company: "iCode Memorial",
-      year: "Summer 2024",
+      year: "May 2025 - Present",
       image: "/images/icode.jpeg",
       description:
-        "• Taught kids how to create Minecraft Mods + assisted with debugging computer-related issues",
+        "• Teach fundamental programming concepts such as conditionals and block coding through hands-on learning in an interactive project setting",
       link: "https://icodeschool.com/memorial/"
     },
     {
@@ -39,7 +39,7 @@ const PortfolioPack = () => {
       year: "Summer 2024",
       image: "/images/stemkidz.jpg",
       description:
-        "• Instructed a robotics camp, introducing students to hardware assembly and C++ programming fundamentals",
+        "• Instructed a robotics camp, introducing students to hardware assembly and C++ programming fundamentals.",
       link: "https://www.linkedin.com/posts/leonhnguyen_were-excited-to-announce-a-successful-end-activity-7237558077992943616-SAna?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEEW1lUBFcReHVGW0mCaKTqIKJHHfVeh-bo"
     },
     {
@@ -49,7 +49,7 @@ const PortfolioPack = () => {
       year: "Summer 2023",
       image: "/images/mobalytics.gg.png",
       description:
-        "• Researched gaming industry trends, selected a genre, and analyzed player psychology and engagement patterns",
+        "• Researched gaming industry trends, selected a genre, and analyzed player psychology and engagement patterns.",
       link: "https://mobalytics.gg/"
     },
     {
@@ -58,17 +58,17 @@ const PortfolioPack = () => {
       company: "3rd Place Winner @ HackTX 2024",
       year: "Fall 2024",
       image: "/images/therable.jpeg",
-      description: "3rd place in international coding competition",
+      description: "• Developed the landing page and dashboard using Next.js, JavaScript, React, and TailwindCSS, integrated Clerk for secure user access.",
       link: "https://devpost.com/software/therable",
     },
     {
       id: 5,
-      title: "IRL Pokedex",
-      company: "Various Projects",
-      year: "2017-Present",
-      image: "/images/stemkidz.jpg",
-      description: "Active contributor to multiple open source projects",
-      link: "https://www.linkedin.com/posts/leonhnguyen_were-excited-to-announce-a-successful-end-activity-7237558077992943616-SAna?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEEW1lUBFcReHVGW0mCaKTqIKJHHfVeh-bo",
+      title: "IRL Pokédex",
+      company: "Next.js/Vercel Blob/GET/POST/GPT",
+      year: "Winter 2024",
+      image: "/images/pokedex.png",
+      description: "• Developed a Pokémon-themed web application with Next.js and React, utilizing Vercel Blob to handle images and GPT to generate Pokémon-like descriptions of user-uploaded images.",
+      link: "https://youtu.be/zHO1zwewZow",
     },
   ];
 

@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Leon Nguyen Resume",
+  title: "Leon/Resume",
   description: "Leon Nguyen Resume",
 };
 
