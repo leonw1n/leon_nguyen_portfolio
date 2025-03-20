@@ -27,7 +27,7 @@ const PortfolioPack = () => {
       title: "Tech Lead",
       company: "iCode Memorial",
       year: "May 2025 - Present",
-      image: "/images/icode.jpeg",
+      image: "/images/icode.jpg",
       description:
         "• Teach fundamental programming concepts such as conditionals and block coding through hands-on learning in an interactive project setting",
       link: "https://icodeschool.com/memorial/",
