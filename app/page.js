@@ -3,18 +3,27 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const playSound = (file) => {
-  const audio = new Audio(file);
+let isPlaying = false; // Global flag to track audio state
 
-  // Try to play the sound & catch errors (needed for iOS)
+const playSound = (file) => {
+  if (isPlaying) return; // Prevent playing if already playing
+
+  isPlaying = true; // Set flag to prevent multiple plays
+  const audio = new Audio(file);
+  
   audio.play().catch(error => {
     console.log("iOS blocked audio autoplay. User must interact first.");
   });
 
-  // Ensure the sound is preloaded on iOS
+  // Reset flag when audio finishes playing
+  audio.onended = () => {
+    isPlaying = false;
+  };
+
+  // Ensure audio is preloaded on iOS after first interaction
   document.body.addEventListener("touchstart", () => {
     audio.play();
-  }, { once: true });  // Runs only once to avoid multiple event listeners
+  }, { once: true });
 };
 
 const playSwipeSound = () => playSound("/sounds/packrip.mp3");
