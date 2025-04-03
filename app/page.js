@@ -1,34 +1,23 @@
 "use client";
 
+import "./styles/cardStyles.css"
+import "./styles/packStyles.css"
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-let isPlaying = false; // Global flag to track audio state
-
-const playSound = (file) => {
-  if (isPlaying) return; // Prevent playing if already playing
-
-  isPlaying = true; // Set flag to prevent multiple plays
-  const audio = new Audio(file);
-  
-  audio.play().catch(error => {
-    console.log("iOS blocked audio autoplay. User must interact first.");
+const playSwipeSound = () => {
+  const audio = new Audio("/sounds/packrip.mp3");
+  audio.play().catch((e) => {
+    console.log("Swipe sound blocked:", e.message);
   });
-
-  // Reset flag when audio finishes playing
-  audio.onended = () => {
-    isPlaying = false;
-  };
-
-  // Ensure audio is preloaded on iOS after first interaction
-  document.body.addEventListener("touchstart", () => {
-    audio.play();
-  }, { once: true });
 };
 
-const playSwipeSound = () => playSound("/sounds/packrip.mp3");
-const playCardSwipeSound = () => playSound("/sounds/swipe.mp3");
-
+const playCardSwipeSound = () => {
+  const audio = new Audio("/sounds/swipe.mp3");
+  audio.play().catch((e) => {
+    console.log("Card sound blocked:", e.message);
+  });
+};
 
 const PortfolioPack = () => {
   // State Management
@@ -39,14 +28,13 @@ const PortfolioPack = () => {
   useEffect(() => {
     const preloadAudio = (src) => {
       const audio = new Audio(src);
-      audio.load();  // Preloads the sound file
+      audio.load(); // Preloads the sound file
     };
-  
+
     // Preload both sound files
     preloadAudio("/sounds/packrip.mp3");
     preloadAudio("/sounds/swipe.mp3");
   }, []);
-  
 
   // Card Data
   const cards = [
@@ -54,7 +42,7 @@ const PortfolioPack = () => {
       id: 1,
       title: "Tech Lead",
       company: "iCode Memorial",
-      year: "May 2025 - Present",
+      year: "March 2025 - Present",
       image: "/images/icode.jpg",
       description:
         "• Teach fundamental programming concepts such as conditionals and block coding through hands-on learning in an interactive project setting",
@@ -100,6 +88,16 @@ const PortfolioPack = () => {
         "• Developed a Pokémon-themed web application with Next.js and React, utilizing Vercel Blob to handle images and GPT to generate Pokémon-like descriptions of user-uploaded images.",
       link: "https://youtu.be/zHO1zwewZow",
     },
+    {
+      id: 6,
+      title: "CyberSecurity Fellow",
+      company: "CodePath",
+      year: "February 2025 - Present",
+      image: "/images/pokedex.png",
+      description:
+        "• 10-week Cybersecurity Program, currently gaining hands-on experience with ethical hacking, CTF challenges, and real-world tools like Metasploit.",
+      link: "https://www.codepath.org/courses/cybersecurity"
+    }
   ];
 
   // Handle Pack Opening Animation
@@ -124,59 +122,40 @@ const PortfolioPack = () => {
     <div className="min-h-screen bg-[#ceddf3] p-8 flex flex-col items-center">
       <AnimatePresence>
         {!isPackOpened ? (
-          // PACK CUT OPENING ANIMATION
-          <motion.div key="pack" className="relative w-64 h-96">
-            {/* Background */}
-            <div className="absolute inset-0 bg-gray-100 rounded-lg" />
-            {/* Bottom part of the pack */}
-            <div className="absolute inset-x-0 top-20 bottom-0 bg-gradient-to-br from-purple-600 to-purple-800 rounded-b-lg shadow-xl overflow-hidden flex flex-col items-center justify-end p-4">
-              {/* Image inside the pack at the bottom */}
-              <img
-                src="/images/resume_image.jpg"
-                alt="Resume Pack"
-                className="w-32 h-32 object-cover rounded-lg shadow-md mb-2"
-              />
-
-              {/* Name's Resume Text Below the Image */}
-              <div className="text-white text-center font-bold text-lg">
-                Leon Nguyen's Portfolio
+          <motion.div key="pack" className="pack-container">
+          <div className="pack-background" />
+          <div className="pack-bottom">
+            <img
+              src="/images/resume_image.jpg"
+              alt="Resume Pack"
+              className="pack-image"
+            />
+            <div className="pack-name">Leon Nguyen's Portfolio</div>
+          </div>
+          <motion.div
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={(_, info) => {
+              if (Math.abs(info.offset.x) > 100) {
+                handlePackOpen();
+              }
+            }}
+            className="pack-top"
+          >
+            <div className="pack-top-glow" />
+            <div className="pack-text">Swipe Me to Open</div>
+            <div className="pack-swipe-line">
+              <div className="pack-swipe-bar">
+                <motion.div className="pack-swipe-bar-fill" />
               </div>
             </div>
-
-            {/* Top part of the pack (Swipe Cut Effect) */}
-            <motion.div
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              onDragEnd={(_, info) => {
-                if (Math.abs(info.offset.x) > 100) {
-                  handlePackOpen();
-                }
-              }}
-              className="absolute inset-x-0 top-0 h-20 bg-gradient-to-br from-purple-600 to-purple-800 rounded-t-lg cursor-grab overflow-hidden flex items-center justify-center"
-            >
-              {/* Holographic Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20" />
-
-              {/* Swipe to Open Text */}
-              <div className="text-white font-bold text-lg">
-                Swipe Me to Open
-              </div>
-
-              {/* Swipe Line */}
-              <div className="absolute top-12 left-0 w-full px-4">
-                <div className="relative h-1 bg-[#f4eff1]/20 rounded">
-                  <motion.div className="absolute top-0 left-0 h-full bg-[#f4eff1]/60 rounded" />
-                </div>
-              </div>
-
-              <div className="absolute bottom-0 left-0 w-full h-2 bg-purple-900" />
-            </motion.div>
+            <div className="pack-border-bottom" />
           </motion.div>
+        </motion.div>        
         ) : !allCardsRevealed ? (
-          // SWIPE ONE CARD AT A TIME
           <motion.div
             key={cards[currentCardIndex].id}
-            className="relative w-80 h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center cursor-pointer"
+            className="card cursor-pointer"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             onDragEnd={handleCardSwipe}
@@ -188,79 +167,65 @@ const PortfolioPack = () => {
             <img
               src={cards[currentCardIndex].image}
               alt={cards[currentCardIndex].title}
-              className="w-full h-40 object-cover rounded-lg mb-4"
+              className="card-image"
             />
-            <h3 className="text-xl font-bold text-center mb-2">
-              {cards[currentCardIndex].title}
-            </h3>
-            <div className="text-gray-600 text-center mb-2">
-              {cards[currentCardIndex].company}
-            </div>
-            <div className="text-sm text-gray-500 text-center mb-4">
-              {cards[currentCardIndex].year}
-            </div>
-            <p className="text-gray-700 text-center">
-              {cards[currentCardIndex].description}
-            </p>
-            <motion.div className="absolute bottom-6 flex flex-col items-center">
-              {/* Clickable Link Above */}
+            <h3 className="card-title">{cards[currentCardIndex].title}</h3>
+            <div className="card-company">{cards[currentCardIndex].company}</div>
+            <div className="card-year">{cards[currentCardIndex].year}</div>
+            <p className="card-description">{cards[currentCardIndex].description}</p>
+            <motion.div className="card-link-container">
               <a
                 href={cards[currentCardIndex].link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 underline hover:text-blue-800 mb-1"
+                className="card-link"
               >
                 Link
               </a>
-
-              {/* Swipe Text Below */}
-              <div className="text-sm text-gray-400">Swipe to Reveal Next</div>
+              <div className="card-swipe-text">Swipe to Reveal Next</div>
             </motion.div>
           </motion.div>
         ) : (
-// SHOW ALL CARDS AFTER SWIPE
-<motion.div
-  key="all-cards"
-  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-4 justify-center"
-  initial={{ opacity: 0, scale: 0.8 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.6 }}
->
-  {/* Map through ALL CARDS instead of separating into "top" and "bottom" rows */}
-  {cards.map((card) => (
-    <motion.div
-      key={card.id}
-      className="relative w-full max-w-[22rem] h-[30rem] bg-[#f4eff1] rounded-lg shadow-xl p-4 flex flex-col justify-start items-center"
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: card.id * 0.1 }}
-    >
-      <img
-        src={card.image}
-        alt={card.title}
-        className="w-full h-40 object-cover rounded-t-lg mb-4"
-      />
-      <h3 className="text-xl font-bold text-center mb-1">{card.title}</h3>
-      <div className="text-gray-600 text-center mb-2">{card.company}</div>
-      <div className="text-sm text-gray-500 text-center mb-4">{card.year}</div>
-      <p className="text-gray-700 text-center">{card.description}</p>
-      <div className="absolute bottom-6 flex flex-col items-center">
-        <a
-          href={card.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 underline hover:text-blue-800 mb-1"
-        >
-          Link
-        </a>
-      </div>
-    </motion.div>
-  ))}
-</motion.div>
+          <motion.div
+            key="all-cards"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-4 justify-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            {cards.map((card) => (
+              <motion.div
+                key={card.id}
+                className="card"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: card.id * 0.1 }}
+              >
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="card-image"
+                />
+                <h3 className="card-title">{card.title}</h3>
+                <div className="card-company">{card.company}</div>
+                <div className="card-year">{card.year}</div>
+                <p className="card-description">{card.description}</p>
+                <div className="card-link-container">
+                  <a
+                    href={card.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="card-link"
+                  >
+                    Link
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
   );
 };
-
 export default PortfolioPack;
