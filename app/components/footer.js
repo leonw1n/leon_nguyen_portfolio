@@ -15,7 +15,7 @@ const Footer1 = () => {
         <FaLinkedin />
       </a>
       <a
-        href="https://github.com/leonhnguyen"
+        href="https://github.com/leonw1n"
         target="_blank"
         rel="noopener noreferrer"
         className="text-gray-700 hover:text-gray-900 text-2xl"
