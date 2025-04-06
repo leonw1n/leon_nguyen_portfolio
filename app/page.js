@@ -47,7 +47,7 @@ const PortfolioPack = () => {
       title: "Tech Lead",
       company: "iCode Memorial",
       year: "March 2025 - Present",
-      image: "/images/iCode.webp",
+      image: "/images/icode.webp",
       description:
         "• Teaching students core computer science concepts like algorithms, loops, and variables through Minecraft modding and Scratch.",
       link: "https://icodeschool.com/memorial/",
